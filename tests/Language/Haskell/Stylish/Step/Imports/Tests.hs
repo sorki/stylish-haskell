@@ -80,6 +80,7 @@ tests = testGroup "Language.Haskell.Stylish.Step.Imports.Tests"
     , testCase "case 44a" case44a
     , testCase "case 44b" case44b
     , testCase "case 44c" case44c
+    , testCase "case 45" case45
     ]
 
 
@@ -1322,3 +1323,22 @@ case44c =
               ]
           , importAlign  = None
           }
+
+
+--------------------------------------------------------------------------------
+case45 :: Assertion
+case45 =
+  let
+    options = defaultOptions { importAlign = None, entityListAlign = ELMultiline }
+  in
+    assertSnippet (step (Just 40) options)
+    case45input
+    [ "import Foo (Bar"
+    , "          ( x"
+    , "          , y"
+    , "          ))"
+    ]
+
+case45input :: Snippet
+case45input =
+    [ "import Foo (Bar(x, y))" ]
